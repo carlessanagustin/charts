@@ -11,7 +11,8 @@ image:
 ##
 service:
   replicas: 1
-  type: ClusterIP
+  #type: ClusterIP
+  type: LoadBalancer
 
 ## Persist data to a persistent volume
 ##
@@ -26,7 +27,7 @@ persistence:
   ##
   # storageClass: "-"
   accessMode: ReadWriteOnce
-  size: 8Gi
+  size: 2Gi
 
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/

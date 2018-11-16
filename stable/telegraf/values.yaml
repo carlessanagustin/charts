@@ -40,14 +40,16 @@ daemonset:
       omit_hostname: false
     outputs:
       influxdb:
-        urls: []
+        #urls: []
+        urls:
+          - "http://influxdb-influxdb.tick-ns:8086"
           # - "http://influxdb-influxdb.tick:8086"
         database: "telegraf"
 ##        retention_policy: ""
 ##        write_consistency: "any"
 ##        timeout: "5s"
-##        username: "telegraf"
-##        password: "metricsmetricsmetricsmetrics"
+        username: "admin"
+        password: "admin@123"
 ##        user_agent: "telegraf"
 ##        udp_payload: 512
 ##        ssl_ca: "/etc/telegraf/ca.pem"
@@ -131,7 +133,7 @@ daemonset:
 ## Configure the telegraf single instance here.
 ## Resource limits and outputs can be set separately
 single:
-  enabled: true
+  enabled: false
   ## Configure resource requests and limits
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
   resources:

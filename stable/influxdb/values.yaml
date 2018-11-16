@@ -39,7 +39,7 @@ persistence:
   ##
   # storageClass: "-"
   accessMode: ReadWriteOnce
-  size: 8Gi
+  size: 2Gi
 
 ## Create default user through Kubernetes job
 ## Defaults indicated below
@@ -70,7 +70,7 @@ setDefaultUser:
     ## User password
     ## single quotes must be escaped (\')
     ## Default: (Randomly generated 10 characters of AlphaNum)
-    # password:
+    password: "admin@123"
 
     ## User privileges
     ## Default: "WITH ALL PRIVILEGES"
