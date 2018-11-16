@@ -133,7 +133,7 @@ daemonset:
 ## Configure the telegraf single instance here.
 ## Resource limits and outputs can be set separately
 single:
-  enabled: false
+  enabled: true
   ## Configure resource requests and limits
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
   resources:
@@ -173,14 +173,16 @@ single:
       omit_hostname: false
     outputs:
       influxdb:
-        urls: []
+        #urls: []
+        urls:
+          - "http://influxdb-influxdb.tick-ns:8086"
           # - "http://influxdb-influxdb.tick:8086"
         database: "telegraf"
 ##        retention_policy: ""
 ##        write_consistency: "any"
 ##        timeout: "5s"
-##        username: "telegraf"
-##        password: "metricsmetricsmetricsmetrics"
+        username: "admin"
+        password: "admin@123"
 ##        user_agent: "telegraf"
 ##        udp_payload: 512
 ##        ssl_ca: "/etc/telegraf/ca.pem"
@@ -310,12 +312,13 @@ single:
 ##        type: "global"
 ##        filters:
 ##          - ""
-##      elasticsearch:
-##        servers:
-##          - "http://localhost:9200"
-##        http_timeout: "5s"
-##        local: true
-##        cluster_health: false
+      elasticsearch:
+        servers:
+          - "http://elasticsearch-client.efk-ns.svc:9200"
+          #- "http://localhost:9200"
+        http_timeout: "5s"
+        local: true
+        cluster_health: true
 ##        ssl_ca: "/etc/telegraf/ca.pem"
 ##        ssl_cert: "/etc/telegraf/cert.pem"
 ##        ssl_key: "/etc/telegraf/key.pem"
@@ -337,7 +340,8 @@ single:
 ##          - "http://myhaproxy.com:1936/haproxy?stats"
       influxdb:
         urls:
-          - "http://influxdb-influxdb.tick:8086/debug/vars"
+          - "http://influxdb-influxdb.tick-ns:8086/debug/vars"
+          #- "http://influxdb-influxdb.tick:8086/debug/vars"
         timeout: "5s"
 ##      lustre2:
 ##        ost_procfiles:
@@ -432,12 +436,12 @@ single:
 ##        databases:
 ##          - "app_production"
 ##          - "testing"
-      prometheus:
-        urls:
-          - "https://kubernetes.default:443/metrics"
-        name_prefix: "prom_"
-        bearer_token: "/var/run/secrets/kubernetes.io/serviceaccount/token"
-        insecure_skip_verify: true
+##      prometheus:
+##        urls:
+##          - "https://kubernetes.default:443/metrics"
+##        name_prefix: "prom_"
+##        bearer_token: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+##        insecure_skip_verify: true
 ##        ssl_ca: /path/to/cafile
 ##        ssl_cert: /path/to/certfile
 ##        ssl_key: /path/to/keyfile
@@ -482,12 +486,12 @@ single:
 ##        write_timeout: "10s"
 ##        max_body_size: 0
 ##        max_line_size: 0
-      statsd:
-        service_address: ":8125"
-        percentiles:
-          - 50
-          - 95
-          - 99
-        metric_separator: "_"
-        allowed_pending_messages: 10000
-        percentile_limit: 1000
+##      statsd:
+##        service_address: ":8125"
+##        percentiles:
+##          - 50
+##          - 95
+##          - 99
+##        metric_separator: "_"
+##        allowed_pending_messages: 10000
+##        percentile_limit: 1000
