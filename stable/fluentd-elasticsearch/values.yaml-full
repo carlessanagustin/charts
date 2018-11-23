@@ -415,6 +415,7 @@ configMaps:
     <filter kubernetes.**>
       @type kubernetes_metadata
     </filter>
+
     <match **>
       @id elasticsearch
       @type elasticsearch
@@ -438,14 +439,6 @@ configMaps:
         queue_limit_length "#{ENV['OUTPUT_BUFFER_QUEUE_LIMIT']}"
         overflow_action block
       </buffer>
-    </match>
-    <match pattern>
-        @type file
-        path /fluentlog
-        time_slice_format %Y%m%d
-        time_slice_wait 10m
-        time_format %Y-%m-%d_%H:%M:%S
-        compress gzip
     </match>
 
 # extraVolumes:

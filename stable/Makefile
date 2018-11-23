@@ -1,5 +1,5 @@
-NS_EFK ?= efk-ns
-NS_TICK ?= tick-ns
+NS_EFK ?= efk
+NS_TICK ?= tick
 NS_DASH ?= dashboard
 NS_ING ?= ingress
 
@@ -11,13 +11,20 @@ create_efk:
 
 delete_efk:
 	helm delete --purge elasticsearch
+	kubectl delete pvc -l release=elasticsearch,component=data
 	helm delete --purge kibana
 	helm delete --purge fluentd-elasticsearch
 	kubectl delete ns ${NS_EFK}
 
 get_efk:
-	kubectl -n ${NS_EFK} get all -o wide
-	# ds,deploy,pods,svc,sa
+	kubectl -n ${NS_EFK} get ingress,services,pod,daemonsets,deployments,statefulsets,replicasets,replicationcontrollers,cronjobs,jobs -o wide
+
+get_efk_vol:
+	kubectl -n ${NS_EFK} get endpoints,persistentvolumeclaims,storageclasses,persistentvolumes -o wide
+
+get_efk_conf:
+	kubectl -n ${NS_EFK} get configmaps,serviceaccounts -o wide
+
 
 create_tick:
 	kubectl create ns ${NS_TICK}
@@ -62,11 +69,11 @@ get_ingress:
 create_helm:
 	kubectl -n kube-system create serviceaccount tiller
 	kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
-	helm init --service-account tiller
+	helm init --service-account tiller --upgrade
 	helm repo update
 
 delete_helm:
 	kubectl -n kube-system delete deployment tiller-deploy
 	kubectl delete clusterrolebinding tiller
 	kubectl -n kube-system delete serviceaccount tiller
-	helm reset
+	-helm reset -f

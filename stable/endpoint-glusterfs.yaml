@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: glusterfs-ep
+spec:
+  ports:
+    - port: 1
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: glusterfs-ep
+subsets:
+  - addresses:
+      - ip: <glusterfs_ip>
+    ports:
+      - port: 1

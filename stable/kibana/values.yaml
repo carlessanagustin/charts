@@ -21,17 +21,18 @@ files:
     ## Default Kibana configuration from kibana-docker.
     server.name: kibana
     server.host: "0"
-    elasticsearch.url: http://elasticsearch:9200
+    elasticsearch.url: http://elasticsearch-client:9200
 
     ## Custom config properties below
     ## Ref: https://www.elastic.co/guide/en/kibana/current/settings.html
     # server.port: 5601
     # logging.verbose: "true"
-    # server.defaultRoute: "/app/kibana"
+    server.defaultRoute: "/app/kibana"
 
 service:
+  #type: LoadBalancer
   type: ClusterIP
-  externalPort: 443
+  externalPort: 5601
   internalPort: 5601
   # authProxyPort: 5602 To be used with authProxyEnabled and a proxy extraContainer
   ## External IP addresses of service

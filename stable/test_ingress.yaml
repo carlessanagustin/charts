@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress
+  namespace: efk
+spec:
+  backend:
+    serviceName: kibana
+    servicePort: 80
+---
+spec:
+  rules:
+  - host: HOSTNAME_OF_MASTER
+    http:
+      paths:
+      - path: /kube-ui/
+        backend:
+          serviceName: kubernetes-dashboard
+          servicePort: 80
+      - path: /kibana/
+        backend:
+          serviceName: kibana-logging
+          servicePort: 5601
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: example
+  namespace: foo
+spec:
+  rules:
+    - host: www.example.com
+      http:
+        paths:
+          - backend:
+              serviceName: exampleService
+              servicePort: 80
+            path: /

@@ -137,18 +137,19 @@ controller:
 
   minAvailable: 1
 
-  resources: {}
-  #  limits:
-  #    cpu: 100m
-  #    memory: 64Mi
-  #  requests:
-  #    cpu: 100m
-  #    memory: 64Mi
+  #resources: {}
+  resources:
+    limits:
+      cpu: 100m
+      memory: 64Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
 
   autoscaling:
-    enabled: false
+    enabled: true
     minReplicas: 1
-    maxReplicas: 11
+    maxReplicas: 3
     targetCPUUtilizationPercentage: 50
     targetMemoryUtilizationPercentage: 50
 
@@ -236,7 +237,7 @@ controller:
 
 
   stats:
-    enabled: false
+    enabled: true
 
     service:
       annotations: {}
@@ -250,12 +251,13 @@ controller:
       loadBalancerIP: ""
       loadBalancerSourceRanges: []
       servicePort: 18080
-      type: ClusterIP
+      #type: ClusterIP
+      type: LoadBalancer
 
   ## If controller.stats.enabled = true and controller.metrics.enabled = true, Prometheus metrics will be exported
   ##
   metrics:
-    enabled: false
+    enabled: true
 
     service:
       annotations: {}
@@ -272,7 +274,8 @@ controller:
       loadBalancerIP: ""
       loadBalancerSourceRanges: []
       servicePort: 9913
-      type: ClusterIP
+      #type: ClusterIP
+      type: LoadBalancer
 
   lifecycle: {}
 
@@ -328,13 +331,14 @@ defaultBackend:
 
   minAvailable: 1
 
-  resources: {}
-  # limits:
-  #   cpu: 10m
-  #   memory: 20Mi
-  # requests:
-  #   cpu: 10m
-  #   memory: 20Mi
+  #resources: {}
+  resources:
+   limits:
+     cpu: 10m
+     memory: 20Mi
+   requests:
+     cpu: 10m
+     memory: 20Mi
 
   service:
     annotations: {}
@@ -348,7 +352,8 @@ defaultBackend:
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
     servicePort: 80
-    type: ClusterIP
+    #type: ClusterIP
+    type: LoadBalancer
 
   priorityClassName: ""
 

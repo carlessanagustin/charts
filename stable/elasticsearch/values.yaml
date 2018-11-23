@@ -63,7 +63,7 @@ cluster:
 
 client:
   name: client
-  replicas: 2
+  replicas: 1
   serviceType: ClusterIP
   loadBalancerIP: {}
   loadBalancerSourceRanges: {}
@@ -94,13 +94,13 @@ client:
 master:
   name: master
   exposeHttp: false
-  replicas: 3
+  replicas: 2
   heapSize: "512m"
   persistence:
     enabled: true
     accessMode: ReadWriteOnce
     name: data
-    size: "4Gi"
+    size: "2Gi"
     # storageClass: "ssd"
   antiAffinity: "soft"
   nodeAffinity: {}
@@ -127,13 +127,14 @@ master:
 data:
   name: data
   exposeHttp: false
-  replicas: 2
-  heapSize: "1536m"
+  replicas: 1
+  #heapSize: "1536m"
+  heapSize: "512m"
   persistence:
     enabled: true
     accessMode: ReadWriteOnce
     name: data
-    size: "30Gi"
+    size: "4Gi"
     # storageClass: "ssd"
   terminationGracePeriodSeconds: 3600
   antiAffinity: "soft"

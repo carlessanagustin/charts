@@ -40,7 +40,8 @@ affinity: {}
 
 
 service:
-  type: ClusterIP
+  #type: ClusterIP
+  type: LoadBalancer
   externalPort: 443
 
   ## This allows an override of the heapster service name

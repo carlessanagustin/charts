@@ -1,0 +1,17 @@
+# TODO demo
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: efk-pv-gluster
+  annotations:
+    pv.beta.kubernetes.io/gid: "0"
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  glusterfs:
+    endpoints: glusterfs-ep
+    path: efk_shared
+    readOnly: false
+  persistentVolumeReclaimPolicy: Retain
