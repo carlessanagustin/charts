@@ -2,6 +2,16 @@ NS_EFK ?= efk
 NS_TICK ?= tick
 NS_DASH ?= dashboard
 NS_ING ?= ingress
+NS_METRICS ?= metrics
+
+
+create_metrics:
+	kubectl create ns ${NS_METRICS}
+	helm install --name metrics --namespace ${NS_METRICS} --version v2.0.4 -f metrics-server/values.yaml stable/metrics-server
+
+delete_metrics:
+	helm delete --purge metrics
+	kubectl delete ns ${NS_METRICS}
 
 create_efk:
 	kubectl create ns ${NS_EFK}
