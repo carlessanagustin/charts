@@ -81,7 +81,7 @@ controller:
 
   ## DaemonSet or Deployment
   ##
-  kind: Deployment
+  kind: DaemonSet
 
   # The update strategy to apply to the Deployment or DaemonSet
   ##
@@ -137,19 +137,18 @@ controller:
 
   minAvailable: 1
 
-  #resources: {}
-  resources:
-    limits:
-      cpu: 100m
-      memory: 64Mi
-    requests:
-      cpu: 100m
-      memory: 64Mi
+  resources: {}
+  #  limits:
+  #    cpu: 100m
+  #    memory: 64Mi
+  #  requests:
+  #    cpu: 100m
+  #    memory: 64Mi
 
   autoscaling:
-    enabled: true
+    enabled: false
     minReplicas: 1
-    maxReplicas: 3
+    maxReplicas: 11
     targetCPUUtilizationPercentage: 50
     targetMemoryUtilizationPercentage: 50
 
@@ -185,15 +184,15 @@ controller:
       http: http
       https: https
 
-    type: LoadBalancer
+    #type: LoadBalancer
+    #nodePorts:
+    #  http: ""
+    #  https: ""
 
-    # type: NodePort
-    # nodePorts:
-    #   http: 32080
-    #   https: 32443
+    type: NodePort
     nodePorts:
-      http: ""
-      https: ""
+      http: 32080
+      https: 32443
 
   extraContainers: []
   ## Additional containers to be added to the controller pod.
@@ -237,7 +236,7 @@ controller:
 
 
   stats:
-    enabled: true
+    enabled: false
 
     service:
       annotations: {}
@@ -251,13 +250,12 @@ controller:
       loadBalancerIP: ""
       loadBalancerSourceRanges: []
       servicePort: 18080
-      #type: ClusterIP
-      type: LoadBalancer
+      type: ClusterIP
 
   ## If controller.stats.enabled = true and controller.metrics.enabled = true, Prometheus metrics will be exported
   ##
   metrics:
-    enabled: true
+    enabled: false
 
     service:
       annotations: {}
@@ -274,8 +272,7 @@ controller:
       loadBalancerIP: ""
       loadBalancerSourceRanges: []
       servicePort: 9913
-      #type: ClusterIP
-      type: LoadBalancer
+      type: ClusterIP
 
   lifecycle: {}
 
@@ -331,14 +328,13 @@ defaultBackend:
 
   minAvailable: 1
 
-  #resources: {}
-  resources:
-   limits:
-     cpu: 10m
-     memory: 20Mi
-   requests:
-     cpu: 10m
-     memory: 20Mi
+  resources: {}
+  # limits:
+  #   cpu: 10m
+  #   memory: 20Mi
+  # requests:
+  #   cpu: 10m
+  #   memory: 20Mi
 
   service:
     annotations: {}
@@ -352,8 +348,7 @@ defaultBackend:
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
     servicePort: 80
-    #type: ClusterIP
-    type: LoadBalancer
+    type: ClusterIP
 
   priorityClassName: ""
 
