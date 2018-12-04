@@ -1,6 +1,5 @@
 NS_EFK ?= efk
 NS_TICK ?= tick
-NS_DASH ?= dashboard
 
 
 create_efk:
@@ -43,13 +42,3 @@ delete_tick:
 get_tick:
 	kubectl -n ${NS_TICK} get all -o wide
 
-create_dashboard:
-	kubectl create ns ${NS_DASH}
-	helm install --name k8s-dashboard --namespace ${NS_DASH} -f kubernetes-dashboard/values.yaml stable/kubernetes-dashboard
-
-delete_dashboard:
-	helm delete --purge k8s-dashboard
-	kubectl delete ns ${NS_DASH}
-
-get_dashboard:
-	kubectl -n ${NS_DASH} get all -o wide

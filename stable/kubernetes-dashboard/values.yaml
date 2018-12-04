@@ -40,8 +40,7 @@ affinity: {}
 
 
 service:
-  #type: ClusterIP
-  type: LoadBalancer
+  type: ClusterIP
   externalPort: 443
 
   ## This allows an override of the heapster service name
@@ -70,14 +69,14 @@ resources:
 ingress:
   ## If true, Kubernetes Dashboard Ingress will be created.
   ##
-  enabled: false
+  enabled: true
 
   ## Kubernetes Dashboard Ingress annotations
   ##
-  # annotations:
-  #   kubernetes.io/ingress.class: nginx
-  #   nginx.ingress.kubernetes.io/secure-backends: "true"
-  #   kubernetes.io/tls-acme: 'true'
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+    kubernetes.io/tls-acme: 'true'
 
   ## Kubernetes Dashboard Ingress path
   ##
@@ -86,8 +85,8 @@ ingress:
   ## Kubernetes Dashboard Ingress hostnames
   ## Must be provided if Ingress is enabled
   ##
-  # hosts:
-  #   - kubernetes-dashboard.domain.com
+  hosts:
+    - www.example.com
 
   ## Kubernetes Dashboard Ingress TLS configuration
   ## Secrets must be manually created in the namespace
@@ -103,14 +102,14 @@ rbac:
 
   # Specifies whether cluster-admin ClusterRole will be used for dashboard
   # ServiceAccount (NOT RECOMMENDED).
-  clusterAdminRole: false
+  clusterAdminRole: true
 
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name:
+  name: k8s-dash-sa
 
 livenessProbe:
   # Number of seconds to wait before sending first probe
